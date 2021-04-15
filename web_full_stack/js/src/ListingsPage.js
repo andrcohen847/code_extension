@@ -14,14 +14,6 @@ function useListings() {
   return listings;
 }
 
-//To Set Current Page
-function onClick(setCurrentPage) {
-  return function(event) {
-    let currentPage = Number(event.target.id)
-    setCurrentPage(currentPage);
-  }
-}
-
 //To Set Current Filter
 function onChange(setFilter) {
   return function(event) {
@@ -30,12 +22,20 @@ function onChange(setFilter) {
   }
 }
 
+//To Set Current Page
+function onClick(setCurrentPage) {
+  return function(event) {
+    let currentPage = Number(event.target.id)
+    setCurrentPage(currentPage);
+  }
+}
+
 //To Have Unique Filters/No Repeats
 function isUnique(listings) {
   let seen = {}
 
   return listings.filter((listing) => {
-    return seen.hasOwnProperty(listing.make) ? false : (seen[listing.make] = true);
+    return seen[listing.make] ? false : (seen[listing.make] = true);
   })
 }
 
@@ -60,12 +60,11 @@ export default function ListingsPage() {
   //Current Page state - default is 1
   const [currentPage, setCurrentPage] = useState(1);
   //Filter state - default is "All"
-  const [filter, setFilter] = useState('All');
+  const [currentFilter, setFilter] = useState('All');
   //Grabs all listinngs from API
   const listings = useListings();
   //How many listings to display per page
   const listingsPerPage = 10;
-  console.log('listings', listings)
 
   //Creates Page Numbers array to display on bottom of page
   const pageNumbers = [];
@@ -74,8 +73,8 @@ export default function ListingsPage() {
     }
 
   return (
-    <div className="viewallcontainer">
-        <div className="viewallsidebar">
+    <div className="view__all__container">
+        <div className="view__all__sidebar">
           <h1>Reverb</h1>
           <div id="product-filter">
             <label htmlFor="productFilter">Choose Brand:</label>
@@ -88,7 +87,7 @@ export default function ListingsPage() {
           </div>
         </div>
       <ul className="listings__list">
-        {currentListingsPerPage(listings, listingsPerPage, currentPage, filter).map((listing) => (
+        {currentListingsPerPage(listings, listingsPerPage, currentPage, currentFilter).map((listing) => (
           <li key={listing.id} className="listings__list-item">
             <img
               alt={listing.title}
@@ -100,10 +99,10 @@ export default function ListingsPage() {
           </li>
         ))}
       </ul>
-      <div className="page_list_container">
-        <ul className="page_list">
+      <div className="page__list__container">
+        <ul className="page__list">
           {pageNumbers.map((page) => (
-          <li key={page} id={page} className="page_num"><button id={page} onClick={onClick(setCurrentPage)}>{page}</button></li>
+          <li key={page} id={page} className="page__num"><button id={page} onClick={onClick(setCurrentPage)}>{page}</button></li>
           ))}
         </ul>
       </div>

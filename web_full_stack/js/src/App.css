@@ -67,30 +67,30 @@ a:hover {
   font-size: 2em;
 }
 
-.page_list_container {
+.page__list__container {
   position : absolute;
   display: flex;
   bottom: 10px;
-  width: 50%;
+  width: 100%;
+  justify-content: center;
 }
 
-.page_list {
+.page__list {
   list-style-type: none;
   display: inline-flex;
-  justify-content: space-around;
 }
 
-.page_num {
+.page__num {
   padding: 0.3em;
 }
 
-.viewallcontainer {
+.view__all__container {
   display: flex;
   width: 100%;
   position: relative;
 }
 
-.viewallsidebar {
+.view__all__sidebar {
   display: block;
   width: calc(0.25 * (100vw - 44px));
   margin: 30px;
